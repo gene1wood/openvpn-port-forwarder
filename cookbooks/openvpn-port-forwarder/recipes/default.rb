@@ -21,7 +21,6 @@ package 'base OS packages' do
     easy-rsa
     iptables-services
     policycoreutils-python
-    yum-cron
   ]
 end
 
@@ -192,11 +191,13 @@ template '/etc/sysconfig/iptables' do
   notifies :reload, 'service[iptables]', :delayed
 end
 
-service 'systemd-sysctl'
+execute "sysctl --system" do
+  action :nothing
+end
 
 file '/etc/sysctl.d/30-enable-ip-forwarding.conf' do
   content 'net.ipv4.ip_forward = 1'
-  notifies :reload, 'service[systemd-sysctl]', :delayed
+  notifies :run, 'execute[sysctl --system]', :immediately
 end
 
 systemd_unit 'openvpn@server' do

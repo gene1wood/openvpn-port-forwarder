@@ -12,6 +12,7 @@
       mkdir -p /opt/chef/cookbooks
       yum install -y git
       git clone https://github.com/gene1wood/openvpn-port-forwarder /root/repo
+      # create a /root/node.json file with any customizations
       /root/repo/run-chef.sh
 
 # From the client
