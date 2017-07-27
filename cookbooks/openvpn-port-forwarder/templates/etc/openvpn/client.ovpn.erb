@@ -1,0 +1,23 @@
+client
+dev tun
+proto udp
+remote <%= node[:ipaddress] %> 1194
+#resolv-retry infinite
+nobind
+persist-key
+persist-tun
+cipher AES-256-CBC
+verb 3
+ca /etc/openvpn/keys/ca.crt
+cert /etc/openvpn/keys/<%= node['openvpn']['client_name'] %>.crt
+key /etc/openvpn/keys/<%= node['openvpn']['client_name'] %>.key
+tls-auth /etc/openvpn/keys/ta.key 1
+#key-direction 1
+
+# https://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+remote-cert-tls server
+
+# https://askubuntu.com/a/440156/14601
+script-security 2
+up /etc/openvpn/update-resolv-conf
+down /etc/openvpn/update-resolv-conf

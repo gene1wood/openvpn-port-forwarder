@@ -1,0 +1,9 @@
+# Next steps to execute on the client
+
+    mkdir /etc/openvpn/keys
+    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/client.ovpn /etc/openvpn/keys/
+    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/easy-rsa/keys/ca.crt /etc/openvpn/keys/ca.crt
+    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/easy-rsa/keys/<%= node['openvpn']['client_name'] %>.crt /etc/openvpn/keys/<%= node['openvpn']['client_name'] %>.crt
+    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/easy-rsa/keys/<%= node['openvpn']['client_name'] %>.key /etc/openvpn/keys/<%= node['openvpn']['client_name'] %>.key    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/ta.key /etc/openvpn/keys/ta.key
+
+    sudo openvpn --config /etc/openvpn/keys/client.ovpn

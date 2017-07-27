@@ -1,0 +1,10 @@
+default['sshd']['port'] = 222
+default['easy-rsa']['key_org'] = 'Fort-Funston'
+default['easy-rsa']['key_email'] = 'me@myhost.mydomain'
+default['easy-rsa']['key_ou'] = 'MyOrganizationalUnit'
+default['openvpn']['client_ip'] = '172.19.19.200'
+default['openvpn']['client_network'] = '172.19.19.0'
+default['openvpn']['client_netmask'] = '255.255.255.0'
+default['openvpn']['client_gateway'] = '172.19.19.1'
+default['openvpn']['client_name'] = 'client'
+default['openvpn']['ssh_public_key'] = ''
