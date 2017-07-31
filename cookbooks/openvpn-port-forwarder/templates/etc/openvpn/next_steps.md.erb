@@ -1,5 +1,5 @@
 # Next steps to execute on the client
 
     mkdir /etc/openvpn/keys
-    scp -P <%= node['sshd']['port'] %> root@<%= node[:ipaddress] %>:/etc/openvpn/\{client.ovpn,easy-rsa/keys/ca.crt,easy-rsa/keys/<%= node['openvpn']['client_name'] %>.crt,easy-rsa/keys/<%= node['openvpn']['client_name'] %>.key,ta.key\} /etc/openvpn/keys/
+    scp -P <%= node['sshd']['port'] %> root@<%= node[:cloud].nil? ? node[:ipaddress] : node[:cloud][:public_ipv4] %>:/etc/openvpn/\{client.ovpn,easy-rsa/keys/ca.crt,easy-rsa/keys/<%= node['openvpn']['client_name'] %>.crt,easy-rsa/keys/<%= node['openvpn']['client_name'] %>.key,ta.key\} /etc/openvpn/keys/
     sudo openvpn --config /etc/openvpn/keys/client.ovpn

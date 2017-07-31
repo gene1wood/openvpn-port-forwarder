@@ -5,7 +5,7 @@
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
 directory '/root/.ssh' do
-  mode '0600'
+  mode '0700'
 end
 
 file '/root/.ssh/authorized_keys' do

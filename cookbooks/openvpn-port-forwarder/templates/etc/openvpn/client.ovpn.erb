@@ -2,7 +2,7 @@ client
 dev tun-<%= node['openvpn']['client_name'] %>
 dev-type tun
 proto udp
-remote <%= node[:ipaddress] %> 1194
+remote <%= node[:cloud].nil? ? node[:ipaddress] : node[:cloud][:public_ipv4] %> 1194
 #resolv-retry infinite
 nobind
 persist-key
