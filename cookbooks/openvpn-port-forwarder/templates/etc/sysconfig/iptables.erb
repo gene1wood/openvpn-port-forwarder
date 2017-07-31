@@ -4,6 +4,8 @@
 :OUTPUT ACCEPT [51:6659]
 -A FORWARD -d <%= node['openvpn']['client_ip'] %>/32 -p tcp -m tcp --dport 0:<%= @sshd_port_under %> -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -d <%= node['openvpn']['client_ip'] %>/32 -p tcp -m tcp --dport <%= @sshd_port_over %>:65535 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -d <%= node['openvpn']['client_ip'] %>/32 -p udp -m udp --dport 0:1193 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -d <%= node['openvpn']['client_ip'] %>/32 -p udp -m udp --dport 1195:65535 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
 COMMIT
 *nat
 :PREROUTING ACCEPT [1:60]
@@ -12,5 +14,7 @@ COMMIT
 :POSTROUTING ACCEPT [12:955]
 -A PREROUTING -i <%= node[:network][:default_interface] %> -p tcp -m tcp --dport 0:<%= @sshd_port_under %> -j DNAT --to-destination <%= node['openvpn']['client_ip'] %>
 -A PREROUTING -i <%= node[:network][:default_interface] %> -p tcp -m tcp --dport <%= @sshd_port_over %>:65535 -j DNAT --to-destination <%= node['openvpn']['client_ip'] %>
+-A PREROUTING -i <%= node[:network][:default_interface] %> -p udp -m udp --dport 0:1193 -j DNAT --to-destination <%= node['openvpn']['client_ip'] %>
+-A PREROUTING -i <%= node[:network][:default_interface] %> -p udp -m udp --dport 1195:65535 -j DNAT --to-destination <%= node['openvpn']['client_ip'] %>
 -A POSTROUTING -s <%= node['openvpn']['client_network'] %>/<%= node['openvpn']['client_netmask'] %> -o <%= node[:network][:default_interface] %> -j MASQUERADE
 COMMIT

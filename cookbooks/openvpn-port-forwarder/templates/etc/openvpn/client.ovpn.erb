@@ -1,5 +1,6 @@
 client
-dev tun
+dev tun-<%= node['openvpn']['client_name'] %>
+dev-type tun
 proto udp
 remote <%= node[:ipaddress] %> 1194
 #resolv-retry infinite
